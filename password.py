@@ -1,6 +1,5 @@
-'''User is given 3 chances to enter correct password.
- If more than 3 than tell the user that account blocked'''
- # example
+# '''User is given 3 chances to enter correct password. If more than 3 than tell the user that account blocked'''
+
 attempts = 0
 while True:
     pwd = input("Enter password: ")
