@@ -1,0 +1,58 @@
+import os
+import shutil
+from pathlib import Path
+
+def copy_all_pdfs(source_folder, destination_folder):
+    """
+    Recursively finds all PDF files and copies them to destination folder
+    
+    Args:
+        source_folder (str): Root directory to search
+        destination_folder (str): Where to copy all PDFs
+    """
+    # Create destination folder if it doesn't exist
+    Path(destination_folder).mkdir(parents=True, exist_ok=True)
+    
+    pdf_files = []
+    
+    # Walk through all subdirectories recursively
+    for root, dirs, files in os.walk(source_folder):
+        for file in files:
+            if file.lower().endswith('.pdf'):
+                source_path = os.path.join(root, file)
+                pdf_files.append(source_path)
+                print(f"Found: {source_path}")
+    
+    print(f"\nTotal PDFs found: {len(pdf_files)}")
+    
+    # Copy each PDF to destination
+    copied_count = 0
+    for pdf_path in pdf_files:
+        filename = os.path.basename(pdf_path)
+        dest_path = os.path.join(destination_folder, filename)
+        
+        # Handle duplicate filenames by adding counter
+        counter = 1
+        original_dest = dest_path
+        while os.path.exists(dest_path):
+            name, ext = os.path.splitext(original_dest)
+            dest_path = f"{name}_{counter}{ext}"
+            counter += 1
+        
+        try:
+            shutil.copy2(pdf_path, dest_path)
+            print(f"Copied: {filename} → {dest_path}")
+            copied_count += 1
+        except Exception as e:
+            print(f"Error copying {filename}: {e}")
+    
+    print(f"\n✅ Successfully copied {copied_count}/{len(pdf_files)} PDFs!")
+    return pdf_files
+
+# Usage Example
+if __name__ == "__main__":
+    # Your paths (Windows/Linux/Mac)
+    SOURCE_DIR = r"E:\Documents"  # Source folder with subdirectories
+    DEST_DIR = r"E:\All_PDFs"     # Where to copy all PDFs
+    
+    copy_all_pdfs("E:\\CodeWithHarry-Python", "E:\\Python\\Notes\\test")
