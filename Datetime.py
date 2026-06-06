@@ -1,0 +1,15 @@
+from datetime import date, datetime, time
+
+# print(date.today())
+# print(date.today().month)
+# print(date.today().year)
+# print(date.today().day)
+# print(date.today().monthname)
+print(datetime.now().strftime("%Y-%m-%D %H:%m:%S"))
+# print(datetime.now().month)
+# print(datetime.now().year)
+# print(datetime.now().day)
+# print(datetime.now().hour)
+# print(datetime.now().minute)
+# print(datetime.now().second)
+print(time.isoformat("12,30,000"))
